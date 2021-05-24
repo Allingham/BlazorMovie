@@ -1,0 +1,34 @@
+﻿@page "/state/"
+
+@using BlazorMovie.Data
+@inject StateContainer stateContainer
+
+<h3>StateTest</h3>
+<p>En Hurtig test af state</p>
+<p>Venstre input er i en singleton, højre er lokal værdi</p>
+
+
+<input @bind="stateContainer.SavedString" />
+<input @bind="InputString" />
+
+
+@code
+{
+    private string InputString = "";
+
+    protected override void OnInitialized()
+    {
+        stateContainer.OnChange += StateHasChanged;
+    }
+
+    private void ChangePropertyValue()
+    {
+        stateContainer.SavedString = InputString;
+    }
+
+    public void Dispose()
+    {
+        stateContainer.OnChange -= StateHasChanged;
+    }
+
+}

@@ -1,6 +1,11 @@
 ﻿@page "/"
+@using BlazorMovie.Data
+@inject StateContainer stateContainer
 
 <h1>Velkommen til Movies i Blazor!</h1>
+<p>Der står "@stateContainer.SavedString" i inputtet på state test</p>
 
-Home Page
-
+@code
+{
+  
+}
