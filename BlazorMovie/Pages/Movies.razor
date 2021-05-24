@@ -1,24 +1,26 @@
 ﻿@page "/movies"
 
-@using BlazorMovie.Components
+@inject HttpClient http
+
 @using BlazorMovie.Model
+@using BlazorMovie.Components
 
 @using System.Collections.ObjectModel
-@inject HttpClient http
+
 
 
 <h3>Movies</h3>
 
 <form @onchange="SearchMovies" @onsubmit="SearchMovies">
-    Search: <input @bind="SearchQuery"/>
+    Search: <input @bind="SearchQuery" />
     <button>Do it!</button>
 </form>
 <div class="flex-row d-flex flex-wrap">
     @foreach(var movie in movies)
     {
-        <div class="p-2">
-            <MovieCard movie="@movie"/>
-        </div>
+    <div class="p-2">
+        <MovieCard movie="@movie"/>
+    </div>
     }
 </div>
 
