@@ -1,0 +1,14 @@
+﻿@using BlazorMovie.Model
+
+<NavLink href="@("movie/"+movie.id)">
+    <div class="card" style="width: 18rem">
+        <h1 class="card-header text-truncate">@movie.title</h1>
+        <img src="@("https://image.tmdb.org/t/p/w185_and_h278_bestv2"+movie.poster_path)" />
+    </div>
+</NavLink>
+
+
+@code {
+    [Parameter]
+    public MovieItem movie { get; set; }
+}

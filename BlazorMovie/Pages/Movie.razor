@@ -1,0 +1,38 @@
+﻿@page "/movie/{Id:int}"
+@inject HttpClient http
+@using BlazorMovie.Model
+
+<div class="p-5">
+    <h2>@movie.title</h2>
+    <div class="flex-row d-flex flex-wrap">
+
+        <div id="Info" class="col-6">
+            Released: @movie.release_date <br/>
+            Original Title: @movie.original_title <br />
+            Rated: @movie.vote_average <br />
+
+            <p>@movie.overview</p>
+
+        </div>
+
+        <img class="col-6" src="@("https://image.tmdb.org/t/p/w185_and_h278_bestv2" + movie.poster_path)" />
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private const string BaseURL = "https://api.themoviedb.org/3/movie/";
+    private const string APIKey = "?api_key=8ead07dd4054fd1ebbc2f3f8a6a94214";
+
+    MovieItem movie = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        movie = await http.GetFromJsonAsync<MovieItem>($"{BaseURL + Id + APIKey}");
+        
+    }
+
+}
