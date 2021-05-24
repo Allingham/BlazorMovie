@@ -1,6 +1,9 @@
-﻿@page "/movies"
+﻿@page "/movies/{SearchQuery}"
+@page "/movies/"
+
 
 @inject HttpClient http
+@inject NavigationManager NavigationManager
 
 @using BlazorMovie.Model
 @using BlazorMovie.Components
@@ -16,30 +19,35 @@
     <button>Do it!</button>
 </form>
 <div class="flex-row d-flex flex-wrap">
-    @foreach(var movie in movies)
+    @foreach (var movie in movies)
     {
-    <div class="p-2">
-        <MovieCard movie="@movie"/>
-    </div>
+        <div class="p-2">
+            <MovieCard movie="@movie" />
+        </div>
     }
 </div>
 
 @code {
+    [Parameter]
+    public string SearchQuery { get; set; }
+
     private ObservableCollection<MovieItem> movies = new();
     private MovieDBResponse response;
-    private string SearchQuery;
+    //private string SearchQuery;
 
     private const string APIKey = "api_key=8ead07dd4054fd1ebbc2f3f8a6a94214";
     private const string DefaultSearch = "movie/popular?";
     private const string BaseURL = "https://api.themoviedb.org/3/";
 
-
-
     protected override async Task OnInitializedAsync()
     {
-        response = await http.GetFromJsonAsync<MovieDBResponse>($"{BaseURL+DefaultSearch+APIKey}");
+        /*
+        response = await http.GetFromJsonAsync<MovieDBResponse>($"{BaseURL + DefaultSearch + APIKey}");
 
         movies = response.results;
+        */
+
+        await SearchMovies();
     }
 
     private async Task SearchMovies()
@@ -56,5 +64,10 @@
         }
 
         movies = response.results;
+
+        NavigationManager.NavigateTo($"/movies/{SearchQuery}");
+
+        SearchQuery = string.Empty;
     }
+    
 }
