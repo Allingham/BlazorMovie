@@ -44,7 +44,16 @@
 
     private async Task SearchMovies()
     {
-        response = await http.GetFromJsonAsync<MovieDBResponse>($"{BaseURL}search/movie?query={SearchQuery}&{APIKey}");
+        if (!string.IsNullOrEmpty(SearchQuery))
+        {
+            response = await http.GetFromJsonAsync<MovieDBResponse>($"{BaseURL}search/movie?query={SearchQuery}&{APIKey}");
+
+
+        }
+        else
+        {
+            response = await http.GetFromJsonAsync<MovieDBResponse>($"{BaseURL + DefaultSearch + APIKey}");
+        }
 
         movies = response.results;
     }
