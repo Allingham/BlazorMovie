@@ -1,5 +1,7 @@
 ﻿@page "/movie/{Id:int}"
+
 @inject HttpClient http
+
 @using BlazorMovie.Model
 
 <div class="p-5">
@@ -32,7 +34,5 @@
     protected override async Task OnInitializedAsync()
     {
         movie = await http.GetFromJsonAsync<MovieItem>($"{BaseURL + Id + APIKey}");
-        
     }
-
 }

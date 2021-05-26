@@ -21,7 +21,6 @@ namespace BlazorMovie.Data
             }
         }
 
-
         private MovieItem _savedMovie;
 
         public MovieItem SavedMovie

@@ -1,16 +1,12 @@
 ﻿@page "/movies/{SearchQuery}"
 @page "/movies/"
 
-
 @inject HttpClient http
 @inject NavigationManager NavigationManager
 
 @using BlazorMovie.Model
 @using BlazorMovie.Components
-
 @using System.Collections.ObjectModel
-
-
 
 <h3>Movies</h3>
 
@@ -19,10 +15,11 @@
     <button>Do it!</button>
 </form>
 <div class="flex-row d-flex flex-wrap">
+
     @foreach (var movie in movies)
     {
         <div class="p-2">
-            <MovieCard movie="@movie" />
+            <MovieCard movie="@movie"/>
         </div>
     }
 </div>
@@ -41,13 +38,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await SearchMovies();    
+        
         /*
         response = await http.GetFromJsonAsync<MovieDBResponse>($"{BaseURL + DefaultSearch + APIKey}");
-
         movies = response.results;
         */
-
-        await SearchMovies();
     }
 
     private async Task SearchMovies()
@@ -55,8 +51,6 @@
         if (!string.IsNullOrEmpty(SearchQuery))
         {
             response = await http.GetFromJsonAsync<MovieDBResponse>($"{BaseURL}search/movie?query={SearchQuery}&{APIKey}");
-
-
         }
         else
         {
